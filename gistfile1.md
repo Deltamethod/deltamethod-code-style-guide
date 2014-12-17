@@ -1,21 +1,9 @@
 # Deltamethod Code Style Guide
 
-## Support
+## Browser Support
 
-Styles should support version of Firefox that is one year old and last two versions of Chrome. IE and Safari are NOT supported.
+We support the version of Firefox that is one year old and last two versions of Chrome. IE and Safari are NOT supported.
 Yandex browser and Opera are also supported (and every Blink engine browser).
-
-### Prefix use
-
-If necessary, use a prefix for browser support:
-
-```css
- -webkit-box-shadow: 3px 3px 5px 6px #ccc;
- -moz-box-shadow: 3px 3px 5px 6px #ccc;
- box-shadow: 3px 3px 5px 6px #ccc;
- ```
- 
- However, some properties don't need prefixes with newer versions of browsers. 
 
 ## JavaScript
 
@@ -80,11 +68,6 @@ In your comments, use two special keywords:
   * ``TODO: description`` to describe what should be done later
   * ``FIXME`` to mark bugs you cannot fix right now.
 
-#### Good Practices
-
-**Always comment complex parts of your code**.
-**If the code is complicated enough, a pull request can be rejected based on that.**
-
 #### Brackets
 
 Whitespace around brackets **collapses**:
@@ -132,7 +115,7 @@ var Flyout = require('mixins/flyout/mixin');
 
 ### Scope
 
-  * Use .bind(this) or closures whenever appropriate;
+  * Closures are preferred; feel free to use ``.bind()`` whenever appropriate
   * Prefer closures for small inline functions (closures are a bit faster as well)
   * Use ``var that = this;`` to keep a reference to ``this``.
 
@@ -173,8 +156,11 @@ var single = (function() {
 
 Whenever possible, use ES5 instead of jQuery methods. For example:
 
-```Array.prototype.forEach()``` instead of ```$.each()```.
+``Array.prototype.forEach()`` instead of ``$.each()``.
 
+### Iterations
+
+Use ES5 methods whenever possible. ``.forEach()`` is better than ``for (...)`` loop, and ``Object.keys()`` is better than ``for...in``.
 
 ### Functions
 
@@ -212,7 +198,7 @@ foo('aleph', 12, new Image);
 
 Always use var statements.
 
-Multiple ```var``` declarations is ok:
+Multiple ``var`` declarations are ok:
 
 ```javascript
 function myFunc() {
@@ -386,7 +372,7 @@ require('css!./generalSettings.css');
 
 ### MVC
 
-MVC is used on some pages, but not required. Instead, there are components which may have non-global encapsulated models. They have to be defined in a special ```models``` folder within the component.
+MVC is used on some pages, but not required. Instead, there are components which may have non-global encapsulated models. They have to be defined in a special ``models`` folder within the component.
 
 ## HTML
 
@@ -439,16 +425,17 @@ Always close your tags even if they are **void elements**; this does not affect 
 
 We use LESS to create CSS for most components, but the styleguide rules usually apply to both.
 
-every LESS file should import ```global-variables.less``` in the beginning:
+Commonly used variables such as color, fonts, indentations, common mixins etc. should be defined in a global LESS file which is imported from **every** other LESS file in the project:
 
 ```less
 @import 'global-variables.less';
 ```
 
-This is the only global LESS file in the project. It's a library for variables and mixins that are used through the whole project (colors, default font specifications and other). 
-Since it doesn't contain any styles, when compiled, ```global-variables.less``` doesn't output anything in its CSS file.
+This imported file should not contain any style rules. When compiled, ```global-variables.less``` results in an empty CSS file.
 
-In ```@block``` variable should be defined BEM block specified for that LESS file. Preferred way to declare a ```@block``` variable is inside of a block, so it becomes a local variable:
+The ``@block`` variable should define the BEM block name for the LESS file.
+
+The preferred way to declare a ```@block``` variable is inside of a block, so it becomes a local one:
 
 ```less
 .dm-modal {
@@ -458,7 +445,7 @@ In ```@block``` variable should be defined BEM block specified for that LESS fil
 }
 ```
 
-Block's elements should be nested inside of block with an ```& ```. Same rule applies for modifiers. They should be nested inside of an element.
+Block elements should be nested inside of block with an ``&`` shortcut. Same rule applies for modifiers. They should be nested inside of its block/element.
 
 ```less
 .dm-block {
@@ -466,9 +453,16 @@ Block's elements should be nested inside of block with an ```& ```. Same rule ap
     
     &__element
         // some styles for element here
-        &_modifier  {
-           // some styles for modifier here
+        &_mod  {
+           // styles for a boolean modifier here
         }
+
+        &_mod2  {
+           // styles for key/value modifier here
+           &_yes {}
+           &_no {}
+        }
+
     }
 }
 ```
@@ -643,6 +637,18 @@ Full list of properties grouped in this order:
     transition: transform 150ms linear;
 }
 ```
+### Prefix use
+
+If necessary, use a prefix for browser support:
+
+```css
+ -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    -moz-box-shadow: 3px 3px 5px 6px #ccc;
+         box-shadow: 3px 3px 5px 6px #ccc;
+```
+
+The prefixes should follow our Browser Support guidelines, providing enough support for all used properties.
+
 ## File Structure
 
 ### Blocks file structure
@@ -697,7 +703,8 @@ tableContent
 |---tableContent__mapping-progress.html
 ```
 
-### Othe MVC things file structure
+### File structure for MVC entities
 
-Models are located inside of ```models``` folder. 
-Formatters are functions for two-way bindings, placed inside of rivets folder. They can be used for formatting dates, numbers, currencies and so on.  
+Models are located inside of ```models``` folder.
+
+Formatters, custom binders etc. are placed in a block folder (under ```formatters```, ```binders``` etc.) unless they are shared. In that case, place then on the app level in a subfolder which describes their type.

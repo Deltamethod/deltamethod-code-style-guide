@@ -13,7 +13,21 @@ CS only supports modern browsers such as Chrome and Firefox. Support for Safari 
 the app should work fine there (given some extra vendor prefixes in CSS + some testing). IE is not supported either,
  but latest versions should work, too.
  
-CS is built on top of jQuery, Require.js, Twitter Flight, Rivets + Backbone, and React for **JS**, BEM and LESS for **CSS**. 
+CS is built on top of:
+
+### JavaScript:
+ 
+  * jQuery
+  * Require.js
+  * Twitter Flight
+  * jQuery UI
+  * Rivets.js + Backbone (Exoskeleton fork)
+  * React.js
+  
+### CSS
+
+  * LESS preprocessor (ver. 2.x)
+  * BEM CSS Methodology (Yandex syntax) for classes 
 
 ## Modularization
 
@@ -313,14 +327,16 @@ The page itself mostly takes care about initializing various functions of its to
  and making sure all special states are processed correctly (table being locked for editing, data import
  in progress etc.).
  
+ Many of the subpages appear in modal windows, implemented with the `/common/mixins/modal/modal.js` mixin.
+ 
  Subpages under `blocks` are:
   
-  * `confirm-deleted`
-  * `delTable`
-  * `dynamicRule`
-  * `dynamicRules`
-  * `editTable`
-  * `emptyTable`
+  * `confirm-deleted` Table entry deletion confirmation dialog
+  * `delTable` Delete table dialog
+  * `dynamicRule` Individual dynamic rule UI
+  * `dynamicRules` Edit dynamic rules
+  * `editTable` Edit table columns/data types and other properties
+  * `emptyTable` Empty table button and dialog
   * `extractColumns`
   * `feedColumnSelect`
   * `google-account-autofill`

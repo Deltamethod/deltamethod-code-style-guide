@@ -290,7 +290,50 @@ the failure and start from scratch. Displaying the page is important to make sur
 compicated process was broken.
 
 ### /pages/syncr
+
+Template Export process consisting of multiple steps and various states.
+
+Subpages under `blocks` include:
+
+  * `changes-full` Summary of changes
+  * `changes-total` Summary of changes
+  * `syncrTable` Display table data
+
 ### /pages/tableContent
+
+Table Content (also Table Details or "Excel" page) is the most complicated page in the whole app. It provides table
+editing functionality in an Excel-like interface with a lot of functionality, modal dialogs, features etc. hidden behind
+ menu buttons or only toggled by specific actions.
+ 
+The foundation for the Excel-like interface is the slick-grid standalone component that was forked and further extended
+by Deltamethod CS Frontend Team. Special thanks goes to Mikhail Davydov for hacking the hell out of it. Note that the
+original slick-grid implementation had to be patched, so you can't blindly update the code.
+
+The page itself mostly takes care about initializing various functions of its toolbar, binding components together
+ and making sure all special states are processed correctly (table being locked for editing, data import
+ in progress etc.).
+ 
+ Subpages under `blocks` are:
+  
+  * `confirm-deleted`
+  * `delTable`
+  * `dynamicRule`
+  * `dynamicRules`
+  * `editTable`
+  * `emptyTable`
+  * `extractColumns`
+  * `feedColumnSelect`
+  * `google-account-autofill`
+  * `hiddenColumns`
+  * `importFeed`
+  * `importTable`
+  * `restoreTable`
+  * `slick-grid`
+  * `slick-grid-filter`
+  * `slick-grid-multi-filter`
+  * `tableTypeSelect`
+  * `update-progress`
+
 ### /pages/tableOverview
 ### /pages/template
 ### /pages/templateDetails

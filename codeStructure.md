@@ -399,7 +399,7 @@ Automatically managed:
    
 Manually managed:
 
-  * `6to5`
+  * `6to5` ES6 compiler which is now called Babel, pls consider upgrading
   * `dust-motes` Additional Dust.js helpers
   * `glyphicons-halflings` Icons
   * `jquery-outside-events` jQuery plugin implementing `clickoutside` and similar events
